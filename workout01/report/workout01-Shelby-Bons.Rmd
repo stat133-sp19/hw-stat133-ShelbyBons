@@ -1,0 +1,78 @@
+---
+title: 'workout01: GSW Shot Charts'
+author: "Shelby Bons"
+date: "March 10, 2019"
+output: github_document
+---
+
+```{r shots-data, echo = FALSE, message = FALSE}
+
+library(dplyr)
+
+shots_data <- read.csv("../data/shots-data.csv", stringsAsFactors = FALSE)
+shots_data_2 <- filter(shots_data, shot_type == '2PT Field Goal')
+shots_data_3 <- filter(shots_data, shot_type == '3PT Field Goal')
+```
+
+```{r effective-shooting, echo = FALSE}
+effective_2 <- shots_data_2 %>%
+  select(player, shot_made_flag, shot_distance) %>%
+  group_by(player) %>%
+  summarise(total = n(), made = sum(shot_made_flag == 'shot_yes')) %>%
+  mutate(perc_made = made/total) %>%
+  arrange(desc(perc_made))
+
+effective_3 <- shots_data_3 %>%
+  select(player, shot_made_flag, shot_distance) %>%
+  group_by(player) %>%
+  summarise(total = n(), made = sum(shot_made_flag == 'shot_yes')) %>%
+  mutate(perc_made = made/total) %>%
+  arrange(desc(perc_made))
+
+effective_total <- shots_data %>%
+  select(player, shot_made_flag, shot_distance) %>%
+  group_by(player) %>%
+  summarise(total = n(), made = sum(shot_made_flag == 'shot_yes')) %>%
+  mutate(perc_made = made/total) %>%
+  arrange(desc(perc_made))
+  
+```
+
+
+
+```{r out.width='80%', echo = FALSE, fig.align='center'}
+knitr::include_graphics('../images/gsw-shot-charts.png')
+```
+
+## Golden State Warriors: Shot Charts
+
+
+### Motivation
+
+
+It'd be quite the fun if you were to walk into the RSF courts and ask any of the willing sunday league superstars if they could tell you correctly, who they thought would be the best active 2 point shooter in the Golden State Warriors. Chances are they would probably pick either Steph, Klay, or KD. Chances are they would probably be wrong! It's Andre Iguodala in case you are wondering. 
+
+All fun aside, in this brief write-up I wanted to discuss the main discovery that I have made while exploring the basketball statistics data related to the Golden State Warriors of its key members: Klay Thompson, Steph Curry, Kevin Durant, Draymond Green and Andre Iguodala. It being that given Andre Iguodala shoots the highest two point field goal percentage with a high volume of shoots taken in the GSW team, why is he not commanding more 2 point shots? Does Curry not like him? What's the deal here. 
+
+
+###  Analysis
+
+In this section, we will briefly take a look at Andre Iguodala's shooting percentages relative to the rest of his teammates in order to push forward our petition for him to take more shots as part of the GSW team! Looking at the two point table data below: 
+
+```{r}
+effective_2
+```
+
+
+We can see that Andre Iguodala has a 2 point field goal percentage of almost 64% and when compared to his teammates KD, Steph, Klay, and Draymond Green he outperforms each of his teammates in the category. As I previously asked and to reconsider again, why is he not afforded more two point shot attempts?  At least in the bare minimum, it seems that he should be afforded more opportunities than Draymond Green who is shooting at 49% with Andre having taken 210 shots to Draymond's 346. 
+
+To answer my dilemma, I believe that taking a look at the basketball shot selection of both players may hold the answer. When looking at Andre Iguodala's shot selection it is clear that he is not in particular a high volume shooter (210 shots taken), and if we were to take a closer look at the shot selection picture, Andre seems to only be selecting shots near the baseline (right by the rim) and doesn't actually perform well when he is forced to shot outside of this area. 
+
+I would say that contrary to my initial efforts of him taking more two point shots, if Andre was to take more shots his shots would probably be pushed out outside of the baseline and into the mid-range where most of his shot attempt misses occur. Given that observation in the data, it is safe to conclude that if Andre was to take more shots he would most likely have a lower field goal percentage for two pointers. 
+
+
+```{r out.width='80%', echo = FALSE, fig.align='center'}
+knitr::include_graphics('../images/gsw-shot-charts.png')
+```
+
+
