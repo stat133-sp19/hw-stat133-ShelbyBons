@@ -1,0 +1,71 @@
+---
+title: "Welcome to binomial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Welcome to binomial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(binomial)
+```
+
+## R Package **binomial**
+
+
+The R package **binomial** implements functions for
+calculating probabilities of a Binomial random variable, and related calculations such as the
+probability distribution, the expected value, variance, etc.
+
+
+## Calculating the probability of a binomial random variable
+
+
+Use the function bin_probability().
+
+
+For example, to calculate the probability of getting 2 successes in 5 trials, assuming a probability of 
+success of 0.5, use:
+
+
+```{r}
+bin_probability(success = 2, trials = 5, prob = 0.5)
+```
+
+You might want to use this, say, to obtain the probability of getting 2 heads if you flip a fair coin 5 times.
+
+
+## Obtaining the probability distribution of a binomial random variable
+
+Use the function bin_distribution().
+
+
+Suppose you want to flip a fair coin five times. he number of heads would be an example of a binomial random variable where trials = 5 and probability of success = 0.5.
+
+
+The function bin_distribution will give you the probability distribution of the number of heads. That is, it will return a dataframe with the probability of obtaining each possible number of heads.
+
+
+```{r}
+bin_distribution(trials = 5, prob = 0.5)
+```
+
+### Obtaining the probability distribution of a binomial random variable
+
+Use the function bin_distribution().
+
+This will have an output similar to bin_distribution, with an added column for the cumulative probability distribution (i.e the probability that there that the number of heads is less than or equal to x)
+
+```{r}
+bin_cumulative(trials = 5, prob = 0.5)
+```
+
+
